@@ -18,6 +18,12 @@ This course introduces fundamental data structures and algorithms for undergradu
 - **Attendance:** On-site attendance is required.
 - **Academic Integrity:** Plagiarism (抄襲) and the use of AI-generated solutions are strictly prohibited.
 - **Late Submission:** Late submissions will not be accepted.
+- **Accountability:**
+    - **Progress:** Stay on track with materials, complete assignments on time, and seek help early if needed.
+    - **Ownership:** All work must reflect your own effort and understanding.
+    - **Technical:** Keep backups and ensure submissions are complete before deadlines.
+    - **Communication:** Inform the instructor promptly in case of issues with valid reasons.
+    - **Collaboration:** Contribute fairly and responsibly in group work.
 
 ## Prerequisites
 - Proficiency in programming with C or C++ (knowledge of Java or Python is also acceptable)
