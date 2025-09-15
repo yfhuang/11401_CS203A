@@ -4,10 +4,10 @@ Follow the structure, build/run instructions, and submission rules below.
 
 ## Assignments Overview
 ### Assignment I: Build Your Own GitHub Repository
+- [Read details](./AssignmentI/Assignment_I.pdf)
 - Create a GitHub account and the course repo 11401_CS203A.
 - Enable GitHub Pages at https://{username}.github.io/.
 - Add a meaningful README.md (name, student ID, course, brief description).
-- [Read details](./AssignmentI/Assignment_I.pdf)
 - (Optional) Link a personal domain / add docs via ReadTheDocs.
 - Due: 2025.09.19 23:59
 
