@@ -21,4 +21,10 @@
 This course introduces fundamental data structures and algorithms for undergraduate students. Topics include arrays, linked lists, stacks, queues, trees, graphs, hashing, and sorting/searching algorithms. Emphasis is placed on implementation, analysis, and application of data structures in problem solving.
 
 ## Syllabus
-- **Noted**: Students are required to read the [syllabus](Syllabus.md) carefully. Please be aware that the course schedule may be adjusted depending on the study progress.
+**Noted**: Students are required to read the [syllabus](Syllabus.md) carefully. Please be aware that the course schedule may be adjusted depending on the study progress.
+
+## Assignments
+Assignments will be periodically provided to reinforce the concepts covered in class. These may include programming tasks, problem-solving exercises, and written reports. Submission deadlines will be strictly enforced. Refer to the [Assignment Guidelines](Assignment/README.md) for details.
+
+## Practice Problems
+Practice problems will be made available to help students gain hands-on experience with data structures and algorithms. These exercises are designed to prepare students for exams and practical applications. You may copy the code to your own course repository for practice. Refer to the [Practice Problems](Code/README.md) for more information.
