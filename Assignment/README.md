@@ -9,7 +9,12 @@ Follow the structure, build/run instructions, and submission rules below.
 - Enable GitHub Pages at https://{username}.github.io/.
 - Add a meaningful README.md (name, student ID, course, brief description).
 - (Optional) Link a personal domain / add docs via ReadTheDocs.
-- Due: 2025.09.19 23:59
+- Due: September 19, 2025, 23:59
+
+### Assignment II: Array Selection Sort
+- [Read details](./AssignmentII/Assignment_II.pdf)
+- **Important Notice**: You must print this assignment (Student Worksheet Companion) and write your answers by hand with a pen.
+- Due: October 7, 2025, 17:00 (Room R1102)
 
 ## Help
 - Ask questions in class or office hours.
