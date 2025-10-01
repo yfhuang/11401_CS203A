@@ -28,3 +28,5 @@ Assignments will be periodically provided to reinforce the concepts covered in c
 
 ## Practice Problems
 Practice problems will be made available to help students gain hands-on experience with data structures and algorithms. These exercises are designed to prepare students for exams and practical applications. You may copy the code to your own course repository for practice. Refer to the [Practice Problems](Code/README.md) for more information.
+
+## Utility
