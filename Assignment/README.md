@@ -17,7 +17,7 @@ Follow the structure, build/run instructions, and submission rules below.
 - Due: October 7, 2025, 17:00 (Room R1102)
 
 ### Assignment III: Linked List Selection Sort (Swap Value Version)
-- [Read details](./AssignmentII/Assignment_III.pdf)
+- [Read details](./AssignmentIII/Assignment_III.pdf)
 - **Important Notice**: You must print this assignment (Student Worksheet Companion) and write your answers by hand with a pen.
 - Due: October 20, 2025, 10:00 (Room R60104)
 
