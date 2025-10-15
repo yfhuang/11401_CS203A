@@ -26,6 +26,9 @@ This course introduces fundamental data structures and algorithms for undergradu
 ## Assignments
 Assignments will be periodically provided to reinforce the concepts covered in class. These may include programming tasks, problem-solving exercises, and written reports. Submission deadlines will be strictly enforced. Refer to the [Assignment Guidelines](Assignment/README.md) for details.
 
+## Quizzes
+Quizzes will be conducted periodically to assess students' understanding of the course material. These quizzes may include multiple-choice questions, short answers, and coding problems. They are designed to encourage consistent study habits and reinforce key concepts. Refer to the [Quiz Guidelines](Quiz/README.md) for details on format, schedule, and grading policies.
+
 ## Practice Problems
 Practice problems will be made available to help students gain hands-on experience with data structures and algorithms. These exercises are designed to prepare students for exams and practical applications. You may copy the code to your own course repository for practice. Refer to the [Practice Problems](Code/README.md) for more information.
 
