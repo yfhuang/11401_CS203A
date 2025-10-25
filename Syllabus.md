@@ -63,6 +63,7 @@ Upon successful completion of this course, students will be able to:
 ### Online Resources
 - [The Algorithms](https://github.com/TheAlgorithms)
 - [C Programming with Idioms (2nd Edition)](https://github.com/pangfengliu/C-programming-with-idioms-2nd-edition)
+- [C++ Refactor](https://github.com/pangfengliu/Cplusplus-refactor)
 - [Standard Template Library (STL) Documentation](https://en.cppreference.com/w/cpp/container)
 - [Boost C++ Libraries](https://www.boost.org/)
 

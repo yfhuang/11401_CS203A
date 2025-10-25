@@ -1,6 +1,8 @@
-# Study Note: Abstract Data Type (ADT)
+# Study Note: Tree
 
 ## Description
+
+## Visualization
 
 ## Abstract Data Type
 
