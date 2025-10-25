@@ -5,6 +5,8 @@ Array: A contiguous block of memory that stores elements of the same data type. 
 
 ## Visualization
 
+![Array](./images/Array.png)
+
 ## Abstract Data Type
 
 An array is an abstract data type (ADT) that represents a collection of elements, each identified by at least one array index or key. The array ADT supports the following operations:
