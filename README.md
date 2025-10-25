@@ -32,5 +32,8 @@ Quizzes will be conducted periodically to assess students' understanding of the 
 ## Practice Problems
 Practice problems will be made available to help students gain hands-on experience with data structures and algorithms. These exercises are designed to prepare students for exams and practical applications. You may copy the code to your own course repository for practice. Refer to the [Practice Problems](Code/README.md) for more information.
 
+## Study Note
+Study notes will be shared to help students consolidate their understanding of the course material. These notes will include summaries of key concepts, example problems, and tips for tackling common challenges. Students are encouraged to review these notes regularly. Refer to the [Study Notes](./StudyNote/README.md) for detailed content.
+
 ## Utility
 Utility scripts and tools will be provided to assist students in completing assignments and understanding course materials. These utilities include code snippets, debugging aids, and performance analysis tools. Refer to the [Utility Tools](Utility/README.md) for more information.
