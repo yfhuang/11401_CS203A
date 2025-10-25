@@ -10,8 +10,6 @@ A data structure (DS) is a way of organizing data so that it can be used effecti
 - Here, the size of memory is not fixed.
 - Additionally, it can be randomly updated while the program is running, which is efficient given how memory-intensive the code is.
 
-![Data Structure Classification](./images/Classification.png)
-
 ## Data Structure Operations
 ### Core Operations
 - **Create**: Allocate memory or initialize the data structure (e.g., create an array, initialize a linked list, etc.).
@@ -59,6 +57,8 @@ A data structure (DS) is a way of organizing data so that it can be used effecti
     - Linear Data Structures – The data items are ordered in a linear or sequential order in a linear data structure, with each item being directly connected to its neighbors before and after. Some of its examples are – lists, queues, stacks, etc. 
     - Non-Linear Data Structures – This data structure is the opposite of the linear one. Here the data or the elements are arranged in many-one, one-many, or many-many dimensions. It is not single-dimension data like its counterpart. Some examples of non-linear data structures are tables, trees, and graphs.
 
+![Data Structure Classification](./images/Classification.png)
+
 ## Performance Analysis
 ### Time complexity
 Time complexity quantifies the amount of time an algorithm takes to complete its execution as a function of the input size.
@@ -79,7 +79,7 @@ f(n) = Θ(g(n)) iff f(n) = O(g(n)) and f(n) = Ω(g(n)), for all n, n >= n0.
 Both time complexity and space complexity can be expressed using asymptotic notation.
 
 #### Time Complexity Function Plot
-![Time Complexity Plot](image.png)  
+![Time Complexity Plot](./images/Classification.png)  
 *Reference*: [Code to generate the plot](../Utility/timecomplexity.py)
 
 ### Terminology
