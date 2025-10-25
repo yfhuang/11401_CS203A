@@ -19,6 +19,109 @@ An array is an abstract data type (ADT) that represents a collection of elements
 
 Arrays are widely used due to their simplicity and efficiency in accessing elements by index.
 
+## Array Declaration
+
+### Static Array
+
+#### Declaration
+```c
+// 1D array with five elements
+int array[5];
+```
+
+#### Initialization
+```c
+// Initialize the integer array with 10, 20, 30, 40, 50
+int array[5] = {10, 20, 30, 40, 50};
+
+// Initialize by for loop
+for (int i = 0; i < 5; i++) {
+    array[i] = i + 1;
+}
+```
+
+#### Access
+```c
+// Retrieve the third element from array
+printf("%d", array[2]);
+```
+
+#### Traverse
+```c
+// Traverse the entire array and print
+for (int i = 0; i < 5; i++) {
+    printf("%d", array[i]);
+}
+```
+
+### Dynamic Array
+
+#### Declaration
+```c
+// Dynamic array initialization by malloc()
+int *array;
+int n = 10;
+array = (int *) malloc(n * sizeof(int));
+```
+
+#### Initialization
+```c
+// Initialize by for loop
+for (int i = 0; i < n; i++) {
+    array[i] = i + 1;
+}
+```
+
+#### Access
+```c
+// Access the element by index
+for (int i = 0; i < n; i++) {
+    printf("%d ", array[i]);
+}
+```
+
+#### Traverse
+```c
+// Traverse the entire array and print
+for (int i = 0; i < 5; i++) {
+    printf("%d", array[i]);
+}
+```
+
+### Resize
+
+To resize a dynamic array, you can use the `realloc` function to allocate more memory. Below is an example:
+
+```c
+int *array;
+int n = 10;
+array = (int *) malloc(n * sizeof(int));
+
+// Initialize the array
+for (int i = 0; i < n; i++) {
+    array[i] = i + 1;
+}
+
+// Double the size of the array
+n = n * 2;
+int *temp = (int *) realloc(array, n * sizeof(int));
+
+if (temp == NULL) {
+    free(array);
+    return -1; // Handle memory allocation failure
+}
+
+array = temp;
+
+// Initialize the new elements
+for (int i = n / 2; i < n; i++) {
+    array[i] = i + 1;
+}
+```
+
+This code demonstrates how to resize a dynamic array, ensuring that the new memory is properly initialized and handling potential memory allocation failures.
+
 ## Time Complexity
 
 ## Space Complexity
+
