@@ -79,7 +79,7 @@ f(n) = Θ(g(n)) iff f(n) = O(g(n)) and f(n) = Ω(g(n)), for all n, n >= n0.
 Both time complexity and space complexity can be expressed using asymptotic notation.
 
 #### Time Complexity Function Plot
-![Time Complexity Plot](./images/Classification.png)  
+![Time Complexity Plot](./images/Complexity.png)  
 *Reference*: [Code to generate the plot](../Utility/timecomplexity.py)
 
 ### Terminology
