@@ -7,9 +7,9 @@
 #include "hash_fn.c"
 
 int main(void) {
-    int int_keys[] = {21,22,23,24,25,26,27,28,29,30};
+    int int_keys[] = {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60};
     int num_keys = sizeof(int_keys) / sizeof(int_keys[0]);
-    int table_sizes[] = {10, 11, 101};
+    int table_sizes[] = {10, 11, 37};
     int num_sizes = sizeof(table_sizes) / sizeof(table_sizes[0]);
 
     printf("=== Hash Function Observation (C Version) ===\n\n");
@@ -26,7 +26,7 @@ int main(void) {
         printf("\n");
     }
 
-    const char* str_keys[] = {"cat","dog","bat","cow","ant","owl","bee","hen","pig","fox"};
+    const char* str_keys[] = {"cat", "dog", "bat", "cow", "ant", "owl", "bee", "hen", "pig", "fox"};
     num_keys = sizeof(str_keys) / sizeof(str_keys[0]);
 
     for (int s = 0; s < num_sizes; s++) {

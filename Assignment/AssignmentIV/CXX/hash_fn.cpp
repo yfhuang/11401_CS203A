@@ -11,7 +11,6 @@ int myHashInt(int key, int m) {
 
 int myHashString(const std::string& str, int m) {
     unsigned long hash = 0;
-    for (char c : str)
-        hash = hash * 31 + static_cast<unsigned char>(c);
-    return static_cast<int>(hash % m);
+    // TODO: replace with your own design
+    return static_cast<int>(hash % m);  // basic division method
 }

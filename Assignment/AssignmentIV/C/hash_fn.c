@@ -11,7 +11,6 @@ int myHashInt(int key, int m) {
 
 int myHashString(const char* str, int m) {
     unsigned long hash = 0;
-    for (int i = 0; str[i] != '\0'; i++)
-        hash = hash * 31 + str[i];  // polynomial rolling hash
-    return (int)(hash % m);
+    // TODO: replace with your own design
+    return (int)(hash % m); // basic division method
 }
