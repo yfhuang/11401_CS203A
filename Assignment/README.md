@@ -23,6 +23,12 @@ Follow the structure, build/run instructions, and submission rules below.
 - Due: October 20, 2025, 10:00 (Room R60104)
 - [Answer Key](./AssignmentIII/Assignment_III_Answer.pdf)
 
+### Assignment IV: Hash - Design your Hash Function
+- [Read details](./AssignmentIV/README.md)
+- **Important Notice**: Commit your code and README.md in your own course repository
+- Due: November 23, 2025 23:59:59
+- [Answer Key](./AssignmentIII/Assignment_III_Answer.pdf)
+
 ## Help
 - Ask questions in class or office hours.
 - Use official documentation and textbooks.
