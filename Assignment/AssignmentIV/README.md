@@ -9,6 +9,7 @@
 - Design and implement hash functions for both **integer keys** and **string keys**.
 - Gain practical experience in creating and testing **hash functions** in C and C++.
 - Analyze **index patterns**, **collision rates**, and **distribution uniformity** for various table sizes (m).
+- Learn how to use [Visual Studio Code to connect to your GitHub repository](./VSCode.md) for seamless version control and collaboration.
 
 ## Repository Structure
 ```
