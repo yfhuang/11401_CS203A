@@ -156,3 +156,6 @@ By adhering to these practices, you will develop clean, professional, and well-d
 ## Notes
 - Ensure your code is well-documented and adheres to the provided coding standards.
 - Include observations and analysis in your `README.md`.
+
+## References
+- [Learning Git](https://github.com/doggy8088/Learn-Git-in-30-days/tree/master)
