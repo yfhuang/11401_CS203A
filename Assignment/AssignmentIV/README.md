@@ -101,14 +101,56 @@ AssignmentIV
 ## Source Code Commit
 
 - Make at least three commits for this assignment:
-    1. Initial commit: add README.md and the example C and C++ template files (C/hash_fn.c, C/main.c, CXX/hash_fn.cpp, CXX/main.cpp).
-    2. Development commits: include one or more intermediate commits that record your implementation progress, tests, bug fixes, and small iterative changes. Use descriptive messages (e.g., "implement integer hash", "add string-hash tests", "fix collision handling").
-    3. Final commit: include the finished code, updated README.md with observations, test results, and final evaluation.
+    1. Initial commit: Add `README.md` and the example C and C++ template files (`C/hash_fn.c`, `C/main.c`, `CXX/hash_fn.cpp`, `CXX/main.cpp`).
+    2. Development commits: Include one or more intermediate commits that record your implementation progress, tests, bug fixes, and small iterative changes. Use descriptive messages (e.g., "implement integer hash", "add string-hash tests", "fix collision handling").
+    3. Final commit: Include the finished code, updated `README.md` with observations, test results, and final evaluation.
 
 - Commit guidelines:
     - Write clear, concise commit messages that summarize the change.
-    - Ensure the README.md documents the development history (brief commit log or references to commit IDs) and highlights the final evaluation.
-    - Push all commits to the course repository under AssignmentIV before the deadline.
+    - Ensure the `README.md` documents the development history (brief commit log or references to commit IDs) and highlights the final evaluation.
+    - Push all commits to the course repository under `AssignmentIV` before the deadline.
+
+## Coding and Documentation Style
+
+To ensure your code is readable, maintainable, and adheres to best practices, follow these guidelines:
+
+### 1. Code Style
+- **Indentation**: Use consistent indentation (e.g., 4 spaces per level).
+- **Naming Conventions**:
+    - Use `snake_case` for variable and function names in C. Refer to [ISO C Style Guidelines](https://en.cppreference.com/w/c/language/identifier) for more details.
+    - Use `camelCase` or `PascalCase` for variable and function names in C++. Refer to [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-naming) for best practices.
+- **Comments**:
+    - Add meaningful comments to explain the purpose of functions, complex logic, and key sections of code.
+    - Avoid redundant comments that merely restate the code.
+- **Line Length**: Limit lines to 80-100 characters for better readability.
+
+### 2. Documentation
+- **Function Headers**:
+    - Include a brief description, input parameters, and return values for each function.
+    - Example:
+        ```c
+        /**
+         * @brief Computes the hash index for an integer key.
+         * @param key The integer key to hash.
+         * @param m The table size.
+         * @return The computed hash index.
+         */
+        int myHashInt(int key, int m);
+        ```
+- **File Headers**:
+    - Add a header comment at the top of each file with the file's purpose, author, and modification history.
+
+### 3. Testing and Observations
+- Test your hash functions with a variety of inputs and table sizes.
+- Document your findings in the `README.md`:
+    - Include tables or charts showing index distributions.
+    - Analyze collision rates and uniformity of the hash function.
+
+### 4. Error Handling
+- Ensure your code handles edge cases gracefully (e.g., empty strings, zero table size).
+- Validate inputs where necessary and provide meaningful error messages.
+
+By adhering to these practices, you will develop clean, professional, and well-documented code that is easy to understand and maintain.
 
 ## Notes
 - Ensure your code is well-documented and adheres to the provided coding standards.
