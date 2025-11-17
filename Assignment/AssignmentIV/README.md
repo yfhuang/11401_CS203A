@@ -13,15 +13,20 @@
 
 ## Repository Structure
 ```
+```
 AssignmentIV
-├── C                       # Template code in C
-│   ├── hash_fn.c           # Implement your hash function here
-│   └── main.c              # Calls your hash function
-├── CXX                     # Template code in C++
-│   ├── hash_fn.cpp         # Implement your hash function here
-│   └── main.cpp            # Calls your hash function
-├── README_template.md      # Template for your README
-└── README.md               # Assignment README
+├── C                       # C implementation directory
+│   ├── hash_fn.c           # Hash function implementation in C
+│   ├── hash_fn.h           # Header file for C hash functions
+│   └── main.c              # Main program calling hash functions
+├── CXX                     # C++ implementation directory
+│   ├── hash_fn.cpp         # Hash function implementation in C++
+│   ├── hash_fn.hpp         # Header file for C++ hash functions
+│   └── main.cpp            # Main program calling hash functions
+├── Makefile                # Build configuration file
+├── README.md               # Assignment documentation
+├── README_template.md      # Template for README documentation
+└── VSCode.md               # VS Code setup instructions
 ```
 
 ## Getting Started

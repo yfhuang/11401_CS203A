@@ -17,7 +17,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "hash_fn.cpp"
+#include "hash_fn.hpp"
 
 // Caution: Do not change the content of this file.
 

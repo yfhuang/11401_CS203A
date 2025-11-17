@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "hash_fn.c"
+#include "hash_fn.h"
 
 // Caution: Do not change the content of this file.
 
