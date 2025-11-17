@@ -32,12 +32,12 @@ AssignmentIV
 ## Getting Started
 
 1. **Clone the Repository**  
-    Clone the repository to your local machine:
+    Clone the repository to your local machine (new folder not your repository folder, e.g. /tmp/):
     ```bash
     git clone <repository-url>
     ```
 
-2. **Create the Folder**  
+2. **Create the Folder in your Respoitory**  
     Navigate to your repository and create the assignment folder:
     ```bash
     cd Assignment
@@ -47,10 +47,11 @@ AssignmentIV
 3. **Copy Template Files**  
     Copy the provided templates and example code:
     ```bash
-    cd Assignment/AssignmentIV/
-    cp README_template.md README.md
-    rsync -av C .
-    rsync -av CXX .
+    cp /tmp/11401_CS203A/Assignment/AssignmentIV/README_template.md README.md
+    cp /tmp/11401_CS203A/Assignment/AssignmentIV/Makefile .
+    cp /tmp/11401_CS203A/Assignment/AssignmentIV/VSCode.md .
+    rsync -av /tmp/11401_CS203A/Assignment/AssignmentIV/C .
+    rsync -av /tmp/11401_CS203A/Assignment/AssignmentIV/CXX .
     ```
 
 4. **Verify Folder Structure**  
@@ -64,9 +65,11 @@ AssignmentIV
     AssignmentIV
     ├── C
     │   ├── hash_fn.c
+    │   ├── hash_fn.h
     │   └── main.c
     ├── CXX
     │   ├── hash_fn.cpp
+    │   ├── hash_fn.hpp
     │   └── main.cpp
     └── README.md
 
@@ -87,14 +90,18 @@ AssignmentIV
 
 ## Folder Structure in Your Course Repository
 ```
-AssignmentIV
-├── C                       # Template code in C
-│   ├── hash_fn.c           # Implement your hash function here
-│   └── main.c              # Calls your hash function
-├── CXX                     # Template code in C++
-│   ├── hash_fn.cpp         # Implement your hash function here
-│   └── main.cpp            # Calls your hash function
-└── README.md               # Assignment README
+AssignmentIV/
+├── C/                      # C implementation directory
+│   ├── hash_fn.c           # Hash function implementation in C
+│   ├── hash_fn.h           # Header file for C hash functions
+│   └── main.c              # Main program calling hash functions
+├── CXX/                    # C++ implementation directory
+│   ├── hash_fn.cpp         # Hash function implementation in C++
+│   ├── hash_fn.hpp         # Header file for C++ hash functions
+│   └── main.cpp            # Main program calling hash functions
+├── Makefile                # Build configuration file
+├── README.md               # Assignment documentation
+└── VSCode.md               # VS Code setup instructions
 ```
 
 ## Assignment Instructions
@@ -107,13 +114,14 @@ AssignmentIV
 ## Source Code Commit
 
 - Make at least three commits for this assignment:
-    1. Initial commit: Add `README.md` and the example C and C++ template files (`C/hash_fn.c`, `C/main.c`, `CXX/hash_fn.cpp`, `CXX/main.cpp`).
+    1. Initial commit: Add `README.md`, `Makefile`, `VSCode.md` and the example C and C++ template files (`C/hash_fn.c`, `C/hash_fn.h`, `C/main.c`, `CXX/hash_fn.cpp`, `C/hash_fn.hpp`, `CXX/main.cpp`).
     2. Development commits: Include one or more intermediate commits that record your implementation progress, tests, bug fixes, and small iterative changes. Use descriptive messages (e.g., "implement integer hash", "add string-hash tests", "fix collision handling").
     3. Final commit: Include the finished code, updated `README.md` with observations, test results, and final evaluation.
 
 - Commit guidelines:
     - Write clear, concise commit messages that summarize the change.
     - Ensure the `README.md` documents the development history (brief commit log or references to commit IDs) and highlights the final evaluation.
+    - Update `VSCode.md` with your setup experience and any additional configuration steps you discovered during development.
     - Push all commits to the course repository under `AssignmentIV` before the deadline.
 
 ## Coding and Documentation Style
