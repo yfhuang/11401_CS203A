@@ -13,7 +13,6 @@
 
 ## Repository Structure
 ```
-```
 AssignmentIV
 ├── C                       # C implementation directory
 │   ├── hash_fn.c           # Hash function implementation in C
