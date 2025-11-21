@@ -22,7 +22,8 @@ AssignmentIV
 │   ├── hash_fn.cpp         # Hash function implementation in C++
 │   ├── hash_fn.hpp         # Header file for C++ hash functions
 │   └── main.cpp            # Main program calling hash functions
-├── Makefile                # Build configuration file
+├── Makefile                # Build configuration file for Linux platform
+├── Makefile.bat            # Build configuration file for Windows platform
 ├── README.md               # Assignment documentation
 ├── README_template.md      # Template for README documentation
 └── VSCode.md               # VS Code setup instructions
@@ -48,6 +49,7 @@ AssignmentIV
     ```bash
     cp /tmp/11401_CS203A/Assignment/AssignmentIV/README_template.md README.md
     cp /tmp/11401_CS203A/Assignment/AssignmentIV/Makefile .
+    cp /tmp/11401_CS203A/Assignment/AssignmentIV/Makefile.bat .
     cp /tmp/11401_CS203A/Assignment/AssignmentIV/VSCode.md .
     rsync -av /tmp/11401_CS203A/Assignment/AssignmentIV/C .
     rsync -av /tmp/11401_CS203A/Assignment/AssignmentIV/CXX .
@@ -70,9 +72,10 @@ AssignmentIV
     │   ├── hash_fn.cpp
     │   ├── hash_fn.hpp
     │   └── main.cpp
-    └── README.md
-
-    3 directories, 5 files
+    ├── Makefile                # Build configuration file for Linux platform
+    ├── Makefile.bat            # Build configuration file for Windows platform
+    ├── README.md               # README documentation
+    └── VSCode.md               # VS Code setup instructions
     ```
 
 5. **Understand the Code**  
@@ -98,8 +101,9 @@ AssignmentIV/
 │   ├── hash_fn.cpp         # Hash function implementation in C++
 │   ├── hash_fn.hpp         # Header file for C++ hash functions
 │   └── main.cpp            # Main program calling hash functions
-├── Makefile                # Build configuration file
-├── README.md               # Assignment documentation
+├── Makefile                # Build configuration file for Linux platform
+├── Makefile.bat            # Build configuration file for Windows platform
+├── README.md               # README documentation
 └── VSCode.md               # VS Code setup instructions
 ```
 
@@ -113,7 +117,7 @@ AssignmentIV/
 ## Source Code Commit
 
 - Make at least three commits for this assignment:
-    1. Initial commit: Add `README.md`, `Makefile`, `VSCode.md` and the example C and C++ template files (`C/hash_fn.c`, `C/hash_fn.h`, `C/main.c`, `CXX/hash_fn.cpp`, `C/hash_fn.hpp`, `CXX/main.cpp`).
+    1. Initial commit: Add `README.md`, `Makefile`, `Makefile.bat`, `VSCode.md` and the example C and C++ template files (`C/hash_fn.c`, `C/hash_fn.h`, `C/main.c`, `CXX/hash_fn.cpp`, `C/hash_fn.hpp`, `CXX/main.cpp`).
     2. Development commits: Include one or more intermediate commits that record your implementation progress, tests, bug fixes, and small iterative changes. Use descriptive messages (e.g., "implement integer hash", "add string-hash tests", "fix collision handling").
     3. Final commit: Include the finished code, updated `README.md` with observations, test results, and final evaluation.
 
