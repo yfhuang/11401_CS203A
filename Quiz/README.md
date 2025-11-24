@@ -3,8 +3,13 @@ This section contains quizzes for the course. Each quiz is designed to test your
 
 ## Incoming Quiz
 
+- Quiz III
+    - Time: 16:30~17:00, November 25, 2025
+    - Place: YZU Building I, R1102
+    - Scope: Linked list, Stacks, and Queues 
 
 ## Previous Quizzes
+
 - Quiz II
     - Time: 16:30~17:00, October 21, 2025
     - Place: YZU Building I, R1102

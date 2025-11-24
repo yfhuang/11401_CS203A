@@ -1,12 +1,21 @@
-
 # Data Structures Study Note
 
-This StudyNote provides a comprehensive overview of fundamental data structures. Each section includes detailed explanations, examples, and use cases to help you understand and implement these structures effectively.
+## General
 
-- [Introduction](./01_Introduction.md): Overview of data structures and their importance in computer science.
-- [Array](./03_Array.md): Explanation of arrays, their operations, and common use cases.
-- [Linked List](./04_LinkedList.md): Introduction to linked lists, types, and their applications.
-- [Stack & Queue](./05_Stack+Queue.md): Discussion on stack and queue data structures, their differences, and usage.
-- [Hash Table](./06_HashTable.md): Insights into hash tables, hashing techniques, and collision resolution.
-- [Tree](./07_Tree.md): Overview of tree structures, types, and traversal methods.
-- [Graph](./08_Graph.md): Basics of graphs, representations, and algorithms.
+This study note offers a comprehensive overview of fundamental data structures. Each section contains detailed explanations, examples, and practical use cases to help you understand and implement these structures effectively.
+
+- [Introduction](./01_Introduction.md): Overview of data structures and their significance in computer science.
+- [Abstract Data Type (ADT)](./02_ADT.md): Fundamental concepts of abstract data types, their definition, and how they provide a blueprint for implementing data structures.
+- [Array](./03_Array.md): Comprehensive guide to arrays, their operations, and practical applications.
+- [Linked List](./04_LinkedList.md): Introduction to linked lists, various types, and their implementations.
+- [Stack & Queue](./05_Stack+Queue.md): Exploration of stack and queue data structures, their distinctions, and applications.
+- [Hash Table](./06_HashTable.md): Deep dive into hash tables, hashing algorithms, and collision handling strategies.
+- [Tree](./07_Tree.md): Complete overview of tree structures, various types, and traversal algorithms.
+- [Heap](./08_Heap.md): Detailed study of heap data structure, min/max heaps, and priority queue implementations.
+- [Graph](./09_Graph.md): Foundation of graph theory, representation methods, and fundamental algorithms.
+
+## Special Topics
+
+This section examines advanced topics that illustrate the relationships between different data structures and their specialized applications in solving complex computational challenges.
+
+- [Arithmetic Expressions](./Special01_ArithmeticsExpression.md): Processing and evaluation of arithmetic expressions
