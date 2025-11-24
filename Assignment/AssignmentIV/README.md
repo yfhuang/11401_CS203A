@@ -10,6 +10,7 @@
 - Gain practical experience in creating and testing **hash functions** in C and C++.
 - Analyze **index patterns**, **collision rates**, and **distribution uniformity** for various table sizes (m).
 - Learn how to use [Visual Studio Code to connect to your GitHub repository](./VSCode.md) for seamless version control and collaboration.
+- **Install C/C++ Compiler**: Follow the [C/C++ compiler installation guide](./CComplier.md) to set up MinGW-W64 on Windows or ensure GCC/Clang is installed on Linux/macOS for compiling your hash function implementations.
 
 ## Repository Structure
 ```
