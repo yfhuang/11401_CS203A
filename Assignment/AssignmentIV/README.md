@@ -1,7 +1,7 @@
 # Assignment IV: Hash Function Design & Observation
 
 ## Important Dates
-- **Due Date**: ~~2025.11.23 23:59:59~~ -->  2025.11.25 23:59:59 
+- **Due Date**: ~~2025.11.23 23:59:59~~ -->  2025.11.28 23:59:59 
 - **Submission**: Submit your code in C and C++ along with `README.md` in your course repository (`11401_CS203A/Assignment/AssignmentIV/`).
 
 ## Learning Objectives

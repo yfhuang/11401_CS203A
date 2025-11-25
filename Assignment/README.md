@@ -26,7 +26,7 @@ Follow the structure, build/run instructions, and submission rules below.
 ### Assignment IV: Hash - Design your Hash Function
 - [Read details](./AssignmentIV/README.md)
 - **Important Notice**: Commit your code and README.md in your own course repository
-- Due: ~~November 23, 2025 23:59:59~~ --> November 25, 2025 23:59:59
+- Due: ~~November 23, 2025 23:59:59~~ --> November 28, 2025 23:59:59
 
 ## Help
 - Ask questions in class or office hours.
