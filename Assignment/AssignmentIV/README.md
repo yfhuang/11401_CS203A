@@ -1,7 +1,7 @@
 # Assignment IV: Hash Function Design & Observation
 
 ## Important Dates
-- **Due Date**: 2025.11.23 23:59:59  
+- **Due Date**: ~~2025.11.23 23:59:59~~ -->  2025.11.25 23:59:59 
 - **Submission**: Submit your code in C and C++ along with `README.md` in your course repository (`11401_CS203A/Assignment/AssignmentIV/`).
 
 ## Learning Objectives
@@ -9,6 +9,8 @@
 - Design and implement hash functions for both **integer keys** and **string keys**.
 - Gain practical experience in creating and testing **hash functions** in C and C++.
 - Analyze **index patterns**, **collision rates**, and **distribution uniformity** for various table sizes (m).
+
+## Technical Setup
 - Learn how to use [Visual Studio Code to connect to your GitHub repository](./VSCode.md) for seamless version control and collaboration.
 - **Install C/C++ Compiler**: Follow the [C/C++ compiler installation guide](./CComplier.md) to set up MinGW-W64 on Windows or ensure GCC/Clang is installed on Linux/macOS for compiling your hash function implementations.
 
