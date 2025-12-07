@@ -28,6 +28,12 @@ Follow the structure, build/run instructions, and submission rules below.
 - **Important Notice**: Commit your code and README.md in your own course repository
 - Due: ~~November 23, 2025 23:59:59~~ --> November 28, 2025 23:59:59
 
+### Assignment V: Tree
+- [Read details](./AssignmentV/Assignment_V.pdf)
+- [Download the word version to complete your work](./AssignmentV/Assignment_V.docx)
+- **Important Notice**: Submit your report to YZU Portal System
+- Due: December 30, 2025 23:59:59
+
 ## Help
 - Ask questions in class or office hours.
 - Use official documentation and textbooks.
