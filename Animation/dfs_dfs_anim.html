@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DFS Animation (Undirected Graph)</title>
+  <style>
+    :root { --bg:#0b0f14; --panel:#111826; --ink:#e7eefc; --muted:#9fb0cc; --line:#24324a; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    .wrap { display:grid; grid-template-columns: 420px 1fr; gap:16px; padding:16px; height:100vh; box-sizing:border-box; }
+    .card { background:var(--panel); border:1px solid #1c2a44; border-radius:14px; padding:14px; box-shadow: 0 10px 25px rgba(0,0,0,.25); }
+    h1 { font-size:16px; margin:0 0 8px; }
+    h2 { font-size:13px; margin:14px 0 8px; color:var(--muted); font-weight:600; }
+    textarea { width:100%; height:220px; resize:vertical; background:#0e1522; color:var(--ink); border:1px solid #1c2a44; border-radius:10px; padding:10px; box-sizing:border-box; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px; line-height:1.4; }
+    input, button { font:inherit; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .row > * { flex:0 0 auto; }
+    .pill { padding:6px 10px; border-radius:999px; background:#0e1522; border:1px solid #1c2a44; color:var(--muted); font-size:12px; }
+    .btn { background:#0e1522; color:var(--ink); border:1px solid #2a3b5f; border-radius:10px; padding:8px 10px; cursor:pointer; }
+    .btn:hover { border-color:#3a5487; }
+    .btn.primary { background:#13233a; border-color:#3a5487; }
+    .btn.danger { border-color:#7a2c2c; }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+    .slider { width:170px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .kv { display:grid; grid-template-columns: 110px 1fr; gap:6px 10px; font-size:12px; color:var(--muted); }
+    .kv .v { color:var(--ink); }
+    .status { min-height:44px; padding:10px; border-radius:10px; background:#0e1522; border:1px solid #1c2a44; font-size:12px; line-height:1.4; }
+    canvas { width:100%; height:100%; background:#0b0f14; border-radius:14px; border:1px solid #1c2a44; }
+    .legend { display:flex; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--muted); }
+    .dot { width:10px; height:10px; border-radius:999px; display:inline-block; margin-right:6px; vertical-align:middle; }
+    .small { font-size:12px; color:var(--muted); }
+    .hr { height:1px; background:#1c2a44; margin:12px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>DFS Animation (Undirected Graph)</h1>
+      <div class="small">
+        Deterministic rule: neighbors sorted ascending; iterative DFS uses a stack, pushing neighbors in reverse so the smallest is explored first.
+      </div>
+
+      <h2>Graph (Adjacency List)</h2>
+      <textarea id="adjInput" spellcheck="false">
+0: 1 2
+1: 0 3 4
+2: 0 5
+3: 1 6
+4: 1 6
+5: 2 7
+6: 3 4 7
+7: 5 6
+      </textarea>
+
+      <div class="row" style="margin-top:10px;">
+        <span class="pill">Start</span>
+        <input id="startNode" class="pill mono" style="width:90px; color:var(--ink);" value="0" />
+        <button id="buildBtn" class="btn primary">Build / Reset</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="row">
+        <button id="prevBtn" class="btn">◀ Prev</button>
+        <button id="playBtn" class="btn primary">▶ Play</button>
+        <button id="nextBtn" class="btn">Next ▶</button>
+        <button id="stopBtn" class="btn danger">■ Stop</button>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <span class="pill">Speed</span>
+        <input id="speed" class="slider" type="range" min="100" max="1200" step="50" value="450" />
+        <span id="speedLabel" class="pill mono">450 ms</span>
+      </div>
+
+      <h2>Step</h2>
+      <div class="kv mono">
+        <div>Index</div><div class="v" id="stepIdx">0 / 0</div>
+        <div>Action</div><div class="v" id="action">—</div>
+        <div>Current</div><div class="v" id="current">—</div>
+        <div>Stack</div><div class="v" id="stack">—</div>
+        <div>Visited</div><div class="v" id="visited">—</div>
+      </div>
+
+      <h2>Narration</h2>
+      <div class="status mono" id="narration">Click “Build / Reset” to start.</div>
+
+      <h2>Legend</h2>
+      <div class="legend">
+        <span><span class="dot" style="background:#7aa2ff;"></span>unvisited</span>
+        <span><span class="dot" style="background:#ffd37a;"></span>discovered (in stack)</span>
+        <span><span class="dot" style="background:#76e4a3;"></span>visited</span>
+        <span><span class="dot" style="background:#ff7aa2;"></span>current</span>
+        <span class="small">Edges: normal (dim), DFS tree edge (bright), active edge (highlight)</span>
+      </div>
+
+      <div class="hr"></div>
+      <div class="small">
+        Input format: each line like <span class="mono">u: v w x</span> or <span class="mono">u v w x</span>.
+        Graph is treated as <b>undirected</b> (edges added both ways).
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px;">
+      <canvas id="cv"></canvas>
+    </div>
+  </div>
+
+<script>
+(() => {
+  // ---------- Utilities ----------
+  const $ = (id) => document.getElementById(id);
+
+  function parseAdjacency(text) {
+    const adj = new Map(); // node -> Set(neighbors)
+    const lines = text.split(/\r?\n/).map(s => s.trim()).filter(s => s.length && !s.startsWith("#"));
+    let maxNode = -1;
+
+    function ensure(u) {
+      if (!adj.has(u)) adj.set(u, new Set());
+      maxNode = Math.max(maxNode, u);
+    }
+
+    for (const line of lines) {
+      // Accept "u: v w" or "u v w"
+      const cleaned = line.replace(/:/g, " ");
+      const parts = cleaned.split(/\s+/).filter(Boolean);
+      if (parts.length === 0) continue;
+      const u = Number(parts[0]);
+      if (!Number.isInteger(u) || u < 0) continue;
+      ensure(u);
+      for (let i = 1; i < parts.length; i++) {
+        const v = Number(parts[i]);
+        if (!Number.isInteger(v) || v < 0) continue;
+        ensure(v);
+        if (u === v) continue;
+        // undirected edge
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+      }
+    }
+
+    // Ensure nodes 0..max exist (helps layout)
+    for (let i = 0; i <= maxNode; i++) ensure(i);
+
+    // Convert to sorted arrays
+    const out = {};
+    for (const [u, set] of adj.entries()) {
+      out[u] = Array.from(set).sort((a,b) => a - b);
+    }
+    return { adj: out, n: maxNode + 1 };
+  }
+
+  function edgeKey(a, b) {
+    const x = Math.min(a,b), y = Math.max(a,b);
+    return `${x}-${y}`;
+  }
+
+  // ---------- DFS Step Builder (Iterative) ----------
+  function buildDfsSteps(adjObj, start) {
+    const nodes = Object.keys(adjObj).map(Number);
+    const maxNode = nodes.length ? Math.max(...nodes) : -1;
+    if (!Number.isInteger(start) || start < 0 || start > maxNode) {
+      start = nodes.length ? Math.min(...nodes) : 0;
+    }
+
+    const visited = new Set();
+    const discovered = new Set();
+    const parent = new Map();     // child -> parent
+    const treeEdges = new Set();  // "u-v"
+    const stack = [];
+
+    const steps = [];
+    function snapshot({ action, current=null, activeEdge=null, note="" }) {
+      steps.push({
+        action,
+        current,
+        activeEdge, // {u,v,type} | null
+        note,
+        stack: stack.slice(),
+        visited: Array.from(visited).sort((a,b)=>a-b),
+        discovered: Array.from(discovered).sort((a,b)=>a-b),
+        treeEdges: Array.from(treeEdges),
+      });
+    }
+
+    // init
+    stack.push(start);
+    discovered.add(start);
+    snapshot({
+      action: "push",
+      current: null,
+      note: `Push start node ${start} onto stack; mark it discovered.`
+    });
+
+    while (stack.length > 0) {
+      const v = stack.pop();
+      snapshot({ action: "pop", current: v, note: `Pop ${v} from stack.` });
+
+      if (visited.has(v)) {
+        snapshot({ action: "skip", current: v, note: `${v} is already visited; skip.` });
+        continue;
+      }
+
+      visited.add(v);
+      snapshot({ action: "visit", current: v, note: `Visit ${v}.` });
+
+      const neigh = (adjObj[v] ?? []).slice().sort((a,b)=>a-b);
+
+      // Push neighbors in reverse so smallest is processed first
+      for (let i = neigh.length - 1; i >= 0; i--) {
+        const u = neigh[i];
+        const k = edgeKey(v,u);
+
+        const status =
+          visited.has(u) ? "visited" :
+          discovered.has(u) ? "discovered" :
+          "new";
+
+        snapshot({
+          action: "check",
+          current: v,
+          activeEdge: { u: v, v: u, type: status },
+          note: `Check neighbor ${u} of ${v}: ${status}.`
+        });
+
+        if (!discovered.has(u)) {
+          discovered.add(u);
+          parent.set(u, v);
+          treeEdges.add(k);
+          stack.push(u);
+          snapshot({
+            action: "push",
+            current: v,
+            activeEdge: { u: v, v: u, type: "tree" },
+            note: `Discover ${u} via ${v} → ${u}; push ${u} to stack (DFS tree edge).`
+          });
+        }
+      }
+
+      snapshot({ action: "done-node", current: v, note: `Done processing neighbors of ${v}.` });
+    }
+
+    snapshot({ action: "end", current: null, note: "Stack empty. DFS complete." });
+
+    return { steps, start };
+  }
+
+  // ---------- Drawing ----------
+  const canvas = $("cv");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.floor(rect.width * dpr);
+    canvas.height = Math.floor(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function circleLayout(n, w, h) {
+    const cx = w / 2, cy = h / 2;
+    const r = Math.min(w, h) * 0.38;
+    const pos = new Map();
+    for (let i = 0; i < n; i++) {
+      const ang = (Math.PI * 2 * i) / Math.max(1, n);
+      pos.set(i, { x: cx + r * Math.cos(ang), y: cy + r * Math.sin(ang) });
+    }
+    return pos;
+  }
+
+  function buildEdgeList(adjObj) {
+    const edges = [];
+    const seen = new Set();
+    for (const [su, arr] of Object.entries(adjObj)) {
+      const u = Number(su);
+      for (const v of arr) {
+        const k = edgeKey(u,v);
+        if (seen.has(k)) continue;
+        seen.add(k);
+        edges.push({ u, v, k });
+      }
+    }
+    return edges;
+  }
+
+  function draw(state, model) {
+    const w = canvas.getBoundingClientRect().width;
+    const h = canvas.getBoundingClientRect().height;
+    ctx.clearRect(0, 0, w, h);
+
+    const pos = model.pos;
+    const edges = model.edges;
+
+    const visited = new Set(state.visited);
+    const discovered = new Set(state.discovered);
+    const treeEdges = new Set(state.treeEdges);
+    const current = state.current;
+
+    const active = state.activeEdge ? edgeKey(state.activeEdge.u, state.activeEdge.v) : null;
+
+    // Edges
+    for (const e of edges) {
+      const a = pos.get(e.u), b = pos.get(e.v);
+      const isTree = treeEdges.has(e.k);
+      const isActive = (active === e.k);
+
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+
+      if (isActive) {
+        ctx.strokeStyle = "#ffb86b";
+        ctx.lineWidth = 4;
+        ctx.globalAlpha = 1.0;
+      } else if (isTree) {
+        ctx.strokeStyle = "#76e4a3";
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = 0.95;
+      } else {
+        ctx.strokeStyle = "#24324a";
+        ctx.lineWidth = 2;
+        ctx.globalAlpha = 0.8;
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1.0;
+    }
+
+    // Nodes
+    for (let i = 0; i < model.n; i++) {
+      const p = pos.get(i);
+      const r = 18;
+
+      let fill = "#7aa2ff"; // unvisited
+      if (discovered.has(i) && !visited.has(i)) fill = "#ffd37a"; // discovered (in stack)
+      if (visited.has(i)) fill = "#76e4a3"; // visited
+      if (current === i) fill = "#ff7aa2"; // current
+
+      // Circle
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = fill;
+      ctx.fill();
+
+      // Border
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#0b0f14";
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = "#0b0f14";
+      ctx.font = "bold 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(String(i), p.x, p.y);
+    }
+
+    // Title
+    ctx.fillStyle = "#9fb0cc";
+    ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("DFS (undirected) — nodes in a circle layout", 12, 12);
+  }
+
+  // ---------- UI / Playback ----------
+  let model = null;
+  let steps = [];
+  let idx = 0;
+  let timer = null;
+
+  function setPlaying(on) {
+    if (on) $("playBtn").textContent = "⏸ Pause";
+    else $("playBtn").textContent = "▶ Play";
+  }
+
+  function render() {
+    if (!steps.length || !model) return;
+
+    const s = steps[idx];
+    $("stepIdx").textContent = `${idx + 1} / ${steps.length}`;
+    $("action").textContent = s.action;
+    $("current").textContent = (s.current === null ? "—" : String(s.current));
+    $("stack").textContent = s.stack.length ? `[ ${s.stack.join(", ")} ] (top = right)` : "[]";
+    $("visited").textContent = s.visited.length ? `{ ${s.visited.join(", ")} }` : "{}";
+    $("narration").textContent = s.note;
+
+    draw(s, model);
+
+    $("prevBtn").disabled = idx <= 0;
+    $("nextBtn").disabled = idx >= steps.length - 1;
+  }
+
+  function stop() {
+    if (timer) clearInterval(timer);
+    timer = null;
+    setPlaying(false);
+  }
+
+  function playPause() {
+    if (!steps.length) return;
+    if (timer) {
+      stop();
+      return;
+    }
+    setPlaying(true);
+    const ms = Number($("speed").value);
+    timer = setInterval(() => {
+      if (idx >= steps.length - 1) {
+        stop();
+        return;
+      }
+      idx++;
+      render();
+    }, ms);
+  }
+
+  function next() {
+    if (idx < steps.length - 1) { idx++; render(); }
+  }
+  function prev() {
+    if (idx > 0) { idx--; render(); }
+  }
+
+  function build() {
+    stop();
+    const { adj, n } = parseAdjacency($("adjInput").value);
+    const start = Number($("startNode").value);
+
+    const built = buildDfsSteps(adj, start);
+    steps = built.steps;
+    idx = 0;
+
+    resizeCanvas();
+    const rect = canvas.getBoundingClientRect();
+    const pos = circleLayout(n, rect.width, rect.height);
+    const edges = buildEdgeList(adj);
+    model = { adj, n, pos, edges };
+
+    render();
+  }
+
+  // Wire up events
+  window.addEventListener("resize", () => {
+    if (!model || !steps.length) return;
+    resizeCanvas();
+    const rect = canvas.getBoundingClientRect();
+    model.pos = circleLayout(model.n, rect.width, rect.height);
+    render();
+  });
+
+  $("buildBtn").addEventListener("click", build);
+  $("playBtn").addEventListener("click", playPause);
+  $("stopBtn").addEventListener("click", stop);
+  $("nextBtn").addEventListener("click", next);
+  $("prevBtn").addEventListener("click", prev);
+
+  $("speed").addEventListener("input", (e) => {
+    $("speedLabel").textContent = `${e.target.value} ms`;
+    if (timer) { // restart timer with new speed
+      stop();
+      playPause();
+    }
+  });
+
+  // Initial canvas size
+  resizeCanvas();
+})();
+</script>
+</body>
+</html>

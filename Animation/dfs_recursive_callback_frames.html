@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Recursive DFS Animation (Undirected) — Visual Call Stack</title>
+  <style>
+    :root { --bg:#0b0f14; --panel:#111826; --ink:#e7eefc; --muted:#9fb0cc; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    .wrap { display:grid; grid-template-columns: 460px 1fr; gap:16px; padding:16px; height:100vh; box-sizing:border-box; }
+    .card { background:var(--panel); border:1px solid #1c2a44; border-radius:14px; padding:14px; box-shadow: 0 10px 25px rgba(0,0,0,.25); }
+    h1 { font-size:16px; margin:0 0 8px; }
+    h2 { font-size:13px; margin:14px 0 8px; color:var(--muted); font-weight:600; }
+    textarea { width:100%; height:190px; resize:vertical; background:#0e1522; color:var(--ink); border:1px solid #1c2a44; border-radius:10px; padding:10px; box-sizing:border-box; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px; line-height:1.4; }
+    input, button { font:inherit; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .pill { padding:6px 10px; border-radius:999px; background:#0e1522; border:1px solid #1c2a44; color:var(--muted); font-size:12px; }
+    .btn { background:#0e1522; color:var(--ink); border:1px solid #2a3b5f; border-radius:10px; padding:8px 10px; cursor:pointer; }
+    .btn:hover { border-color:#3a5487; }
+    .btn.primary { background:#13233a; border-color:#3a5487; }
+    .btn.danger { border-color:#7a2c2c; }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+    .slider { width:170px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .kv { display:grid; grid-template-columns: 120px 1fr; gap:6px 10px; font-size:12px; color:var(--muted); }
+    .kv .v { color:var(--ink); }
+    .status { min-height:44px; padding:10px; border-radius:10px; background:#0e1522; border:1px solid #1c2a44; font-size:12px; line-height:1.4; }
+
+    /* Visual call stack */
+    .stackWrap { background:#0e1522; border:1px solid #1c2a44; border-radius:12px; padding:10px; }
+    .stackHeader { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .stackTitle { font-size:12px; color:var(--muted); font-weight:600; }
+    .stackHint { font-size:11px; color:var(--muted); opacity:.9; }
+    .frames { display:flex; flex-direction:column; gap:8px; max-height:190px; overflow:auto; padding-right:4px; }
+    .frame {
+      border:1px solid #233457;
+      border-radius:12px;
+      padding:10px;
+      background:#0b1220;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+    .frame.top {
+      border-color:#ffb86b;
+      box-shadow: 0 0 0 2px rgba(255,184,107,0.15);
+    }
+    .frame .sig { font-size:12px; color:var(--ink); }
+    .frame .meta { margin-top:6px; font-size:11px; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap; }
+    .tag {
+      display:inline-block; padding:2px 8px; border-radius:999px;
+      border:1px solid #2a3b5f; background:#0e1522; font-size:11px; color:var(--muted);
+    }
+    .tag.top { border-color:#ffb86b; color:#ffd37a; }
+    .tag.returning { border-color:#b07cff; color:#d0b4ff; }
+
+    canvas { width:100%; height:100%; background:#0b0f14; border-radius:14px; border:1px solid #1c2a44; }
+    .legend { display:flex; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--muted); }
+    .dot { width:10px; height:10px; border-radius:999px; display:inline-block; margin-right:6px; vertical-align:middle; }
+    .small { font-size:12px; color:var(--muted); }
+    .hr { height:1px; background:#1c2a44; margin:12px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Recursive DFS (Undirected) — Visual Call Stack</h1>
+      <div class="small">
+        Deterministic neighbor order: ascending. The call stack panel shows stack frames pushed on <span class="mono">call</span> and popped on <span class="mono">return</span>.
+      </div>
+
+      <h2>Graph (Adjacency List)</h2>
+      <textarea id="adjInput" spellcheck="false">
+0: 1 2
+1: 0 3 4
+2: 0 5
+3: 1 6
+4: 1 6
+5: 2 7
+6: 3 4 7
+7: 5 6
+      </textarea>
+
+      <div class="row" style="margin-top:10px;">
+        <span class="pill">Start</span>
+        <input id="startNode" class="pill mono" style="width:90px; color:var(--ink);" value="0" />
+        <button id="buildBtn" class="btn primary">Build / Reset</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="row">
+        <button id="prevBtn" class="btn">◀ Prev</button>
+        <button id="playBtn" class="btn primary">▶ Play</button>
+        <button id="nextBtn" class="btn">Next ▶</button>
+        <button id="stopBtn" class="btn danger">■ Stop</button>
+      </div>
+
+      <div class="row" style="margin-top:10px;">
+        <span class="pill">Speed</span>
+        <input id="speed" class="slider" type="range" min="120" max="1200" step="40" value="420" />
+        <span id="speedLabel" class="pill mono">420 ms</span>
+      </div>
+
+      <h2>Step</h2>
+      <div class="kv mono">
+        <div>Index</div><div class="v" id="stepIdx">0 / 0</div>
+        <div>Action</div><div class="v" id="action">—</div>
+        <div>Current</div><div class="v" id="current">—</div>
+        <div>Visited (finished)</div><div class="v" id="visited">—</div>
+      </div>
+
+      <h2>Call Stack Frames</h2>
+      <div class="stackWrap">
+        <div class="stackHeader">
+          <div class="stackTitle mono">Top frame = current function</div>
+          <div class="stackHint mono">return pops the top</div>
+        </div>
+        <div id="frames" class="frames"></div>
+      </div>
+
+      <h2>Narration</h2>
+      <div class="status mono" id="narration">Click “Build / Reset” to start.</div>
+
+      <h2>Legend</h2>
+      <div class="legend">
+        <span><span class="dot" style="background:#7aa2ff;"></span>unvisited</span>
+        <span><span class="dot" style="background:#ffd37a;"></span>in call stack</span>
+        <span><span class="dot" style="background:#76e4a3;"></span>visited & finished</span>
+        <span><span class="dot" style="background:#ff7aa2;"></span>current</span>
+        <span class="small">Edges: normal (dim), tree (green), parent (gray), back (purple), active (orange)</span>
+      </div>
+
+      <div class="hr"></div>
+      <div class="small">
+        Input format: <span class="mono">u: v w x</span> or <span class="mono">u v w x</span>. Graph is treated as <b>undirected</b>.
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px;">
+      <canvas id="cv"></canvas>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  function parseAdjacency(text) {
+    const adj = new Map();
+    const lines = text.split(/\r?\n/).map(s => s.trim()).filter(s => s.length && !s.startsWith("#"));
+    let maxNode = -1;
+
+    function ensure(u) {
+      if (!adj.has(u)) adj.set(u, new Set());
+      maxNode = Math.max(maxNode, u);
+    }
+
+    for (const line of lines) {
+      const cleaned = line.replace(/:/g, " ");
+      const parts = cleaned.split(/\s+/).filter(Boolean);
+      if (!parts.length) continue;
+
+      const u = Number(parts[0]);
+      if (!Number.isInteger(u) || u < 0) continue;
+      ensure(u);
+
+      for (let i = 1; i < parts.length; i++) {
+        const v = Number(parts[i]);
+        if (!Number.isInteger(v) || v < 0) continue;
+        ensure(v);
+        if (u === v) continue;
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+      }
+    }
+
+    for (let i = 0; i <= maxNode; i++) ensure(i);
+
+    const out = {};
+    for (const [u, set] of adj.entries()) {
+      out[u] = Array.from(set).sort((a,b) => a - b);
+    }
+    return { adj: out, n: maxNode + 1 };
+  }
+
+  function edgeKey(a, b) {
+    const x = Math.min(a,b), y = Math.max(a,b);
+    return `${x}-${y}`;
+  }
+
+  // ----- Build recursive DFS steps with explicit frame metadata -----
+  function buildRecursiveDfsSteps(adjObj, start) {
+    const nodes = Object.keys(adjObj).map(Number);
+    const maxNode = nodes.length ? Math.max(...nodes) : -1;
+    if (!Number.isInteger(start) || start < 0 || start > maxNode) {
+      start = nodes.length ? Math.min(...nodes) : 0;
+    }
+
+    const finished = new Set();   // finished nodes
+    const inStack = new Set();    // nodes currently in recursion stack
+    const callStack = [];         // frames: {v, p, nextNeighborIdx}
+    const treeEdges = new Set();
+
+    const steps = [];
+    function snapshot({ action, current=null, activeEdge=null, note="", returning=false }) {
+      steps.push({
+        action,
+        current,
+        activeEdge,
+        note,
+        returning,
+        // copy the stack frames (deep-ish)
+        callStack: callStack.map(f => ({...f})),
+        finished: Array.from(finished).sort((a,b)=>a-b),
+        inStack: Array.from(inStack).sort((a,b)=>a-b),
+        treeEdges: Array.from(treeEdges),
+      });
+    }
+
+    function dfs(v, p) {
+      const neigh = (adjObj[v] ?? []).slice().sort((a,b)=>a-b);
+
+      // push frame
+      callStack.push({ v, p, nextNeighborIdx: 0, neigh });
+      inStack.add(v);
+      snapshot({
+        action: "call",
+        current: v,
+        note: `Call dfs(${v}${p===null ? "" : `, parent=${p}`}). Push a stack frame for ${v}.`
+      });
+
+      for (let i = 0; i < neigh.length; i++) {
+        // update frame "program counter"
+        callStack[callStack.length - 1].nextNeighborIdx = i;
+
+        const u = neigh[i];
+        const k = edgeKey(v,u);
+
+        if (!inStack.has(u) && !finished.has(u)) {
+          treeEdges.add(k);
+          snapshot({
+            action: "tree-edge",
+            current: v,
+            activeEdge: { u: v, v: u, type: "tree" },
+            note: `At dfs(${v}): neighbor ${u} is unvisited → take TREE edge ${v}–${u} and recurse.`
+          });
+
+          dfs(u, v);
+
+          snapshot({
+            action: "resume",
+            current: v,
+            activeEdge: { u: v, v: u, type: "resume" },
+            note: `Back in dfs(${v}) after dfs(${u}) returns. Continue from the next neighbor.`
+          });
+        } else if (u === p) {
+          snapshot({
+            action: "parent-edge",
+            current: v,
+            activeEdge: { u: v, v: u, type: "parent" },
+            note: `At dfs(${v}): neighbor ${u} is the parent → ignore (undirected).`
+          });
+        } else if (inStack.has(u)) {
+          snapshot({
+            action: "back-edge",
+            current: v,
+            activeEdge: { u: v, v: u, type: "back" },
+            note: `At dfs(${v}): neighbor ${u} is already in the call stack → BACK edge ${v}–${u}.`
+          });
+        } else {
+          snapshot({
+            action: "finished-edge",
+            current: v,
+            activeEdge: { u: v, v: u, type: "finished" },
+            note: `At dfs(${v}): neighbor ${u} is already finished → skip.`
+          });
+        }
+      }
+
+      // finish v
+      inStack.delete(v);
+      finished.add(v);
+      snapshot({
+        action: "finish",
+        current: v,
+        note: `Finish dfs(${v}). Mark ${v} as finished (green).`
+      });
+
+      // pop frame
+      callStack.pop();
+      snapshot({
+        action: "return",
+        current: p,
+        returning: true,
+        note: `Return from dfs(${v}). Pop the stack frame for ${v}.`
+      });
+    }
+
+    snapshot({ action: "start", current: null, note: `Start recursive DFS at node ${start}.` });
+    dfs(start, null);
+    snapshot({ action: "end", current: null, note: "DFS complete." });
+
+    return { steps, start };
+  }
+
+  // ---------- Drawing ----------
+  const canvas = $("cv");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.floor(rect.width * dpr);
+    canvas.height = Math.floor(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function circleLayout(n, w, h) {
+    const cx = w / 2, cy = h / 2;
+    const r = Math.min(w, h) * 0.38;
+    const pos = new Map();
+    for (let i = 0; i < n; i++) {
+      const ang = (Math.PI * 2 * i) / Math.max(1, n);
+      pos.set(i, { x: cx + r * Math.cos(ang), y: cy + r * Math.sin(ang) });
+    }
+    return pos;
+  }
+
+  function buildEdgeList(adjObj) {
+    const edges = [];
+    const seen = new Set();
+    for (const [su, arr] of Object.entries(adjObj)) {
+      const u = Number(su);
+      for (const v of arr) {
+        const k = edgeKey(u,v);
+        if (seen.has(k)) continue;
+        seen.add(k);
+        edges.push({ u, v, k });
+      }
+    }
+    return edges;
+  }
+
+  function draw(state, model) {
+    const w = canvas.getBoundingClientRect().width;
+    const h = canvas.getBoundingClientRect().height;
+    ctx.clearRect(0, 0, w, h);
+
+    const pos = model.pos;
+    const edges = model.edges;
+
+    const finished = new Set(state.finished);
+    const inStack = new Set(state.inStack);
+    const treeEdges = new Set(state.treeEdges);
+
+    const current = state.current;
+    const active = state.activeEdge ? edgeKey(state.activeEdge.u, state.activeEdge.v) : null;
+    const activeType = state.activeEdge ? state.activeEdge.type : null;
+
+    for (const e of edges) {
+      const a = pos.get(e.u), b = pos.get(e.v);
+      const isTree = treeEdges.has(e.k);
+      const isActive = (active === e.k);
+
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+
+      ctx.strokeStyle = "#24324a";
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.8;
+
+      if (isTree) {
+        ctx.strokeStyle = "#76e4a3";
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = 0.95;
+      }
+
+      if (isActive) {
+        ctx.globalAlpha = 1.0;
+        if (activeType === "parent") { ctx.strokeStyle = "#8b97ad"; ctx.lineWidth = 4; }
+        else if (activeType === "back") { ctx.strokeStyle = "#b07cff"; ctx.lineWidth = 4; }
+        else if (activeType === "finished") { ctx.strokeStyle = "#5f708f"; ctx.lineWidth = 4; }
+        else { ctx.strokeStyle = "#ffb86b"; ctx.lineWidth = 4; } // tree/resume/etc
+      }
+
+      ctx.stroke();
+      ctx.globalAlpha = 1.0;
+    }
+
+    for (let i = 0; i < model.n; i++) {
+      const p = pos.get(i);
+      const r = 18;
+
+      let fill = "#7aa2ff";                 // unvisited
+      if (finished.has(i)) fill = "#76e4a3"; // finished
+      if (inStack.has(i)) fill = "#ffd37a";  // in call stack
+      if (current === i) fill = "#ff7aa2";   // current
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = fill;
+      ctx.fill();
+
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#0b0f14";
+      ctx.stroke();
+
+      ctx.fillStyle = "#0b0f14";
+      ctx.font = "bold 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(String(i), p.x, p.y);
+    }
+
+    ctx.fillStyle = "#9fb0cc";
+    ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("Recursive DFS (undirected) — watch the call stack frames on the left", 12, 12);
+  }
+
+  // ---------- UI / Playback ----------
+  let model = null;
+  let steps = [];
+  let idx = 0;
+  let timer = null;
+
+  function setPlaying(on) {
+    $("playBtn").textContent = on ? "⏸ Pause" : "▶ Play";
+  }
+
+  function renderFrames(s) {
+    const box = $("frames");
+    box.innerHTML = "";
+
+    const frames = s.callStack || [];
+    if (!frames.length) {
+      const empty = document.createElement("div");
+      empty.className = "frame";
+      empty.innerHTML = `<div class="sig mono">call stack is empty</div>
+                         <div class="meta mono"><span class="tag">no frames</span></div>`;
+      box.appendChild(empty);
+      return;
+    }
+
+    // Display bottom -> top (so top is visually at the bottom), like a real stack.
+    // But students often read top-first; we can show top at the bottom and mark it clearly.
+    for (let i = 0; i < frames.length; i++) {
+      const f = frames[i];
+      const isTop = (i === frames.length - 1);
+
+      const div = document.createElement("div");
+      div.className = "frame" + (isTop ? " top" : "");
+      const parentText = (f.p === null || f.p === undefined) ? "null" : String(f.p);
+
+      const pc = (f.neigh && f.neigh.length)
+        ? `next neighbor index = ${f.nextNeighborIdx} / ${Math.max(0, f.neigh.length - 1)}`
+        : `no neighbors`;
+
+      div.innerHTML = `
+        <div class="sig mono">dfs(${f.v}, parent=${parentText})</div>
+        <div class="meta mono">
+          <span class="tag ${isTop ? "top" : ""}">${isTop ? "TOP frame" : "frame"}</span>
+          <span class="tag">${pc}</span>
+          ${s.returning && isTop ? `<span class="tag returning">returning</span>` : ``}
+        </div>
+      `;
+      box.appendChild(div);
+    }
+
+    // Auto-scroll to bottom so the TOP frame is always visible
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function render() {
+    if (!steps.length || !model) return;
+
+    const s = steps[idx];
+    $("stepIdx").textContent = `${idx + 1} / ${steps.length}`;
+    $("action").textContent = s.action;
+    $("current").textContent = (s.current === null ? "—" : String(s.current));
+    $("visited").textContent = s.finished.length ? `{ ${s.finished.join(", ")} }` : "{}";
+    $("narration").textContent = s.note;
+
+    renderFrames(s);
+    draw(s, model);
+
+    $("prevBtn").disabled = idx <= 0;
+    $("nextBtn").disabled = idx >= steps.length - 1;
+  }
+
+  function stop() {
+    if (timer) clearInterval(timer);
+    timer = null;
+    setPlaying(false);
+  }
+
+  function playPause() {
+    if (!steps.length) return;
+    if (timer) { stop(); return; }
+    setPlaying(true);
+    const ms = Number($("speed").value);
+    timer = setInterval(() => {
+      if (idx >= steps.length - 1) { stop(); return; }
+      idx++;
+      render();
+    }, ms);
+  }
+
+  function next() { if (idx < steps.length - 1) { idx++; render(); } }
+  function prev() { if (idx > 0) { idx--; render(); } }
+
+  function build() {
+    stop();
+    const { adj, n } = parseAdjacency($("adjInput").value);
+    const start = Number($("startNode").value);
+
+    const built = buildRecursiveDfsSteps(adj, start);
+    steps = built.steps;
+    idx = 0;
+
+    resizeCanvas();
+    const rect = canvas.getBoundingClientRect();
+    const pos = circleLayout(n, rect.width, rect.height);
+    const edges = buildEdgeList(adj);
+    model = { adj, n, pos, edges };
+
+    render();
+  }
+
+  window.addEventListener("resize", () => {
+    if (!model || !steps.length) return;
+    resizeCanvas();
+    const rect = canvas.getBoundingClientRect();
+    model.pos = circleLayout(model.n, rect.width, rect.height);
+    render();
+  });
+
+  $("buildBtn").addEventListener("click", build);
+  $("playBtn").addEventListener("click", playPause);
+  $("stopBtn").addEventListener("click", stop);
+  $("nextBtn").addEventListener("click", next);
+  $("prevBtn").addEventListener("click", prev);
+
+  $("speed").addEventListener("input", (e) => {
+    $("speedLabel").textContent = `${e.target.value} ms`;
+    if (timer) { stop(); playPause(); }
+  });
+
+  resizeCanvas();
+})();
+</script>
+</body>
+</html>

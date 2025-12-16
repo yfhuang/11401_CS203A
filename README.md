@@ -37,3 +37,6 @@ Study notes will be shared to help students consolidate their understanding of t
 
 ## Utility
 Utility scripts and tools will be provided to assist students in completing assignments and understanding course materials. These utilities include code snippets, debugging aids, and performance analysis tools. Refer to the [Utility Tools](Utility/README.md) for more information.
+
+## Amination
+Animation demonstrations will be provided to visualize data structures and algorithms in action. These interactive visual aids help students understand complex concepts such as tree traversals, sorting processes, and graph algorithms through step-by-step animated examples. Refer to the [Animation Examples](Animation/README.md) for interactive learning materials.

@@ -3,10 +3,16 @@ This section contains quizzes for the course. Each quiz is designed to test your
 
 ## Incoming Quiz
 
+- Quiz IV (Take Home)
+    - Due: 17:00, December 16, 2025
+    - Place: YZU Building I, R1102
+    - Scope: Tree, Heap, Graph 
+    - [Quiz](Quiz_IV.pdf) 
+
 - Quiz V
     - Time: 16:30~17:00, December 16, 2025
     - Place: YZU Building I, R1102
-    - Scope: Linked list, Stacks, and Queues 
+    - Scope: Tree, Heap, Graph 
 
 ## Previous Quizzes
 
