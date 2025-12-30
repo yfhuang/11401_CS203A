@@ -21,4 +21,4 @@ This study note offers a comprehensive overview of fundamental data structures. 
 This section examines advanced topics that illustrate the relationships between different data structures and their specialized applications in solving complex computational challenges.
 
 - [Arithmetic Expressions](./Special01_ArithmeticsExpression.md): Processing and evaluation of arithmetic expressions
-- [Spanning Tree](./Special02_SpanningTree.md): 
+- [Spanning Tree](./Special02_SpanningTree.md): Finding the Minimal Connected Structure in a Graph
